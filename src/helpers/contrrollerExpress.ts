@@ -6,13 +6,6 @@ export const headers = {
   "Access-Control-Allow-Credentials": true,
 };
 
-export type DataToken = {
-  id_collaborator: string;
-  projects: string[];
-  launch_hours: boolean;
-  id_role: number;
-  id_director_immediate: string | null;
-};
 
 export enum AccessLevel {
   PUBLIC = 1,
