@@ -1,7 +1,5 @@
-
-
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -9,28 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Patient {
-  id            Int       @id @default(autoincrement())
-  email         String         @unique
-  name          String
-  age           Int
-  consultations consultation[]
+model cliente {
+  id       String   @id @default(uuid())
+  name     String
+  email    String   @unique
+  password String
+  imovel   imovel[]
 }
 
-model Doctor {
-  id            Int       @id @default(autoincrement())
-  email          String         @unique
-  name           String
-  specialization String
-  consultations  consultation[]
+model imovel {
+  id          String    @id @default(uuid())
+  rua         String
+  numero      Int
+  cidade      String
+  estado      String
+  cep         String
+  complemento String
+  cliente     cliente   @relation(fields: [clienteId], references: [id])
+  clienteId   String
+  comodos     comodos[]
 }
 
-model consultation {
-  id  Int       @id @default(autoincrement())
-  patientId Int
-  petient   Patient  @relation(fields: [patientId], references: [id])
-  doctorId  Int
-  doctor    Doctor   @relation(fields: [doctorId], references: [id])
-  day       DateTime
-  hour      DateTime
+model comodos {
+  id       String     @id @default(uuid())
+  nome     String
+  imovel   imovel     @relation(fields: [imovelId], references: [id])
+  imovelId String
+  sensores sensores[]
+}
+
+model sensores {
+  id        String  @id @default(uuid())
+  gas       Int
+  chuva     Int
+  solo      Int
+  comodos   comodos @relation(fields: [comodosId], references: [id])
+  comodosId String
 }
