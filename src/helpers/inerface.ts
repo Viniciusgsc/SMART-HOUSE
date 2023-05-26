@@ -9,6 +9,12 @@ export type Response<T> = Promise<{
   body: T;
 }>;
 
-export interface UseCase <B, P , Q, T>{
-    execute(request: Request<B, P, Q>): Response<T>;
+export interface ReturnPaginate<T> {
+  results: T[];
+  current: number;
+  pageSize: number;
+  total: number;
+}
+export interface UseCase<B, P, Q, T> {
+  execute(request: Request<B, P, Q>): Response<T>;
 }
